@@ -1,0 +1,135 @@
+<div class="max-w-6xl mx-auto p-6 space-y-10">
+
+    <!-- ================= FORMULARIO ================= -->
+    <div class="bg-white dark:bg-surface-900 shadow-lg rounded-2xl p-6">
+
+        <h2 class="text-2xl font-bold mb-6">
+            Registro de Almacén
+        </h2>
+
+        <form [formGroup]="almacenForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Nombre -->
+            <div class="flex flex-col gap-2">
+                <label for="nombre" class="font-semibold">Nombre</label>
+                <input pInputText id="nombre" type="text"
+                    placeholder="Nombre"
+                    class="w-full"
+                    formControlName="nombre" />
+            </div>
+
+            <!-- Código -->
+            <div class="flex flex-col gap-2">
+                <label for="codigo" class="font-semibold">Código</label>
+                <input pInputText id="codigo" type="text"
+                    placeholder="Código"
+                    class="w-full"
+                    formControlName="codigo" />
+            </div>
+
+            <!-- Descripción -->
+            <div class="flex flex-col gap-2 md:col-span-2">
+                <label for="descripcion" class="font-semibold">Descripción</label>
+                <input pInputText id="descripcion" type="text"
+                    placeholder="Descripción"
+                    class="w-full"
+                    formControlName="descripcion" />
+            </div>
+
+            <!-- Sucursal -->
+            <div class="flex flex-col gap-2 md:col-span-2">
+                <label for="sucursal" class="font-semibold">Sucursal</label>
+                <p-select
+                    [options]="sucursales()"
+                    formControlName="sucursal"
+                    optionLabel="nombre"
+                    optionValue="id"
+                    placeholder="Seleccionar Sucursal"
+                    class="w-full">
+                </p-select>
+            </div>
+
+            <!-- Botón -->
+            <div class="md:col-span-2 flex justify-end mt-4">
+                <p-button
+                    label="Guardar"
+                    icon="pi pi-save"
+                    [disabled]="!almacenForm.valid"
+                    (click)="funGuardar()">
+                </p-button>
+            </div>
+
+        </form>
+    </div>
+
+
+    <!-- ================= FILTRO ================= -->
+    <div class="bg-white dark:bg-surface-900 shadow-md rounded-2xl p-6">
+
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+            <h3 class="text-xl font-semibold">
+                Filtrar por Sucursal
+            </h3>
+
+            <p-select
+                [options]="sucursales()"
+                [(ngModel)]="selectedSucursal"
+                optionLabel="nombre"
+                optionValue="id"
+                placeholder="Seleccionar Sucursal"
+                class="w-full md:w-80"
+                (onChange)="funSelectedSucursal()">
+            </p-select>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= TABLA ================= -->
+    <div class="bg-white dark:bg-surface-900 shadow-lg rounded-2xl p-6">
+
+        <h2 class="text-2xl font-semibold mb-4">
+            Lista de Almacenes
+        </h2>
+
+        <p-table
+            [value]="almacenes()"
+            responsiveLayout="scroll"
+            styleClass="p-datatable-striped p-datatable-sm">
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Sucursal</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-alm>
+                <tr>
+                    <td>{{ alm.id }}</td>
+                    <td>{{ alm.nombre }}</td>
+                    <td>{{ alm.codigo }}</td>
+                    <td>{{ alm.descripcion }}</td>
+                    <td>
+                        <div class="flex flex-col">
+                            <span class="font-medium">
+                                {{ alm.sucursal.nombre }}
+                            </span>
+                            <small class="text-gray-500">
+                                {{ alm.sucursal.direccion }}
+                            </small>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+
+    </div>
+
+</div>

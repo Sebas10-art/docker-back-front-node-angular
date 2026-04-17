@@ -1,0 +1,84 @@
+<div class="max-w-5xl mx-auto p-6">
+    
+    <!-- Card -->
+    <div class="bg-white dark:bg-surface-900 shadow-lg rounded-2xl p-6">
+
+        <h1 class="text-3xl font-bold mb-6 text-surface-900 dark:text-surface-0">
+            Gestión de Sucursal
+        </h1>
+
+        <!-- Formulario -->
+        <form [formGroup]="sucursalForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div class="flex flex-col gap-2">
+                <label for="nombre" class="font-semibold">Nombre</label>
+                <input pInputText id="nombre" type="text"
+                    placeholder="Nombre"
+                    class="w-full"
+                    formControlName="nombre" />
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label for="direccion" class="font-semibold">Dirección</label>
+                <input pInputText id="direccion" type="text"
+                    placeholder="Dirección"
+                    class="w-full"
+                    formControlName="direccion" />
+            </div>
+
+            <div class="flex flex-col gap-2 md:col-span-2">
+                <label for="ciudad" class="font-semibold">Ciudad</label>
+                <input pInputText id="ciudad" type="text"
+                    placeholder="Ciudad"
+                    class="w-full"
+                    formControlName="ciudad" />
+            </div>
+
+            <!-- Botón -->
+            <div class="md:col-span-2 flex justify-end mt-4">
+                <p-button 
+                    label="Guardar"
+                    icon="pi pi-save"
+                    [disabled]="!sucursalForm.valid"
+                    (click)="funGuardar()">
+                </p-button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Tabla -->
+    <div class="mt-10 bg-white dark:bg-surface-900 shadow-lg rounded-2xl p-6">
+        
+        <h2 class="text-2xl font-semibold mb-4">
+            Lista de Sucursales
+        </h2>
+
+        <p-table 
+            [value]="sucursales()" 
+            responsiveLayout="scroll"
+            styleClass="p-datatable-striped p-datatable-sm">
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Ciudad</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-sucursal>
+                <tr>
+                    <td>{{ sucursal.id }}</td>
+                    <td>{{ sucursal.nombre }}</td>
+                    <td>{{ sucursal.direccion }}</td>
+                    <td>{{ sucursal.ciudad }}</td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+
+    </div>
+
+</div>
