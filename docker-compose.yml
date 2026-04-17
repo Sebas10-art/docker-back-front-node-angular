@@ -1,0 +1,39 @@
+services:
+  postgres_inv:
+    container_name: postgres_inv
+    image: postgres:15-alpine
+    restart: always
+    ports:
+      - "5498:5432"
+    environment:
+      POSTGRES_DB: bd_nest_backend
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin54321
+    volumes:
+      - postgres_data_pg:/var/lib/postgresql/data
+ 
+  backend_nest:
+   container_name: backend_nest
+   build:
+    context: ./backend_nest_inventarios_api_rest
+    dockerfile: Dockerfile
+   ports: 
+     -  "3000:3000"
+
+   depends_on:
+     -  postgres_inv
+
+
+  frontend_angular:
+    container_name: frontend_angular
+    build:
+     context: ./frontend_angular_inventarios
+     dockerfile: Dockerfile
+    ports:
+      - "89:80"
+
+    depends_on:
+      - backend_nest
+
+volumes:
+  postgres_data_pg:
